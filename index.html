@@ -1,0 +1,1077 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --washi:#faf8f3;
+  --washi2:#f4f0e8;
+  --ink:#2c2420;
+  --ink2:#5a4a40;
+  --ink3:#8a7a70;
+  --accent:#8b4513;
+  --accent2:#c0392b;
+  --gold:#b8860b;
+  --green:#2d6a4f;
+  --blue:#1a4a7a;
+  --border:#d4c9b8;
+  --shadow:rgba(44,36,32,0.08);
+}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  background:var(--washi);
+  color:var(--ink);
+  min-height:100vh;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(139,69,19,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(184,134,11,0.04) 0%, transparent 50%);
+}
+.app{display:flex;flex-direction:column;min-height:100vh}
+
+/* Header */
+.header{
+  background:var(--ink);
+  padding:0 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  height:56px;
+  border-bottom:2px solid var(--accent);
+}
+.logo{
+  font-family:'Noto Serif JP',serif;
+  color:var(--washi);
+  font-size:18px;
+  font-weight:500;
+  letter-spacing:0.05em;
+  display:flex;align-items:center;gap:12px;
+}
+.logo-badge{
+  background:var(--accent);
+  color:white;
+  font-size:11px;
+  padding:2px 8px;
+  border-radius:3px;
+  font-family:'Noto Sans JP',sans-serif;
+  font-weight:400;
+  letter-spacing:0.1em;
+}
+.stats-bar{
+  display:flex;gap:24px;align-items:center;
+}
+.stat{
+  color:rgba(250,248,243,0.6);
+  font-size:12px;
+  display:flex;align-items:center;gap:4px;
+}
+.stat strong{color:var(--washi);font-weight:500}
+
+/* Nav */
+.nav{
+  background:var(--washi2);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  padding:0 2rem;
+  gap:0;
+}
+.nav-btn{
+  padding:12px 20px;
+  border:none;
+  background:none;
+  cursor:pointer;
+  font-family:'Noto Sans JP',sans-serif;
+  font-size:13px;
+  color:var(--ink3);
+  border-bottom:2px solid transparent;
+  transition:all 0.2s;
+  display:flex;align-items:center;gap:6px;
+  margin-bottom:-1px;
+}
+.nav-btn:hover{color:var(--accent)}
+.nav-btn.active{
+  color:var(--accent);
+  border-bottom:2px solid var(--accent);
+  font-weight:500;
+}
+.nav-icon{font-size:16px}
+
+/* Main */
+.main{flex:1;padding:2rem;max-width:1100px;margin:0 auto;width:100%}
+
+/* Cards */
+.card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1.5rem;
+  box-shadow:0 2px 8px var(--shadow);
+}
+
+/* Word List */
+.controls{
+  display:flex;gap:12px;margin-bottom:1.5rem;flex-wrap:wrap;align-items:center;
+}
+.search-box{
+  flex:1;min-width:200px;
+  padding:8px 12px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  font-family:'Noto Sans JP',sans-serif;
+  font-size:13px;
+  background:white;
+  color:var(--ink);
+  outline:none;
+}
+.search-box:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(139,69,19,0.12)}
+.filter-select{
+  padding:8px 12px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  font-size:13px;
+  font-family:'Noto Sans JP',sans-serif;
+  background:white;
+  color:var(--ink);
+  outline:none;
+  cursor:pointer;
+}
+.btn{
+  padding:8px 16px;
+  border-radius:6px;
+  font-size:13px;
+  font-family:'Noto Sans JP',sans-serif;
+  cursor:pointer;
+  border:1px solid var(--border);
+  background:white;
+  color:var(--ink);
+  transition:all 0.15s;
+  display:flex;align-items:center;gap:6px;
+}
+.btn:hover{background:var(--washi2)}
+.btn.primary{background:var(--accent);color:white;border-color:var(--accent)}
+.btn.primary:hover{background:#7a3a0f}
+.btn.success{background:var(--green);color:white;border-color:var(--green)}
+
+/* Word Table */
+.word-table{width:100%;border-collapse:collapse}
+.word-table th{
+  text-align:left;padding:10px 12px;
+  font-size:11px;font-weight:500;letter-spacing:0.08em;
+  color:var(--ink3);
+  border-bottom:2px solid var(--border);
+  background:var(--washi2);
+  text-transform:uppercase;
+}
+.word-table td{
+  padding:12px;
+  border-bottom:1px solid rgba(212,201,184,0.5);
+  vertical-align:top;
+}
+.word-table tr:hover td{background:rgba(250,248,243,0.8)}
+.word-kanji{
+  font-family:'Noto Serif JP',serif;
+  font-size:20px;
+  font-weight:500;
+  color:var(--ink);
+  line-height:1.2;
+}
+.word-reading{
+  font-size:12px;color:var(--accent);
+  margin-top:2px;letter-spacing:0.05em;
+}
+.word-meaning{font-size:13px;color:var(--ink2);line-height:1.5}
+.word-example{
+  font-size:12px;color:var(--ink3);
+  margin-top:4px;font-style:italic;
+}
+.tag{
+  display:inline-block;padding:2px 8px;
+  border-radius:3px;font-size:10px;font-weight:500;
+  letter-spacing:0.05em;margin-right:4px;margin-bottom:2px;
+}
+.tag-pos{background:#e8f4f8;color:#1a4a7a}
+.tag-syn{background:#f0f8e8;color:#2d6a4f}
+.tag-ant{background:#fdf0ed;color:#8b4513}
+.tag-year{background:#f8f0e8;color:#b8860b}
+.bookmark-btn{
+  background:none;border:none;cursor:pointer;
+  font-size:16px;color:var(--ink3);padding:4px;
+  transition:all 0.15s;border-radius:4px;
+}
+.bookmark-btn:hover{color:var(--gold);background:rgba(184,134,11,0.1)}
+.bookmark-btn.active{color:var(--gold)}
+.expand-btn{
+  background:none;border:none;cursor:pointer;
+  font-size:12px;color:var(--accent);
+  padding:2px 0;font-family:'Noto Sans JP',sans-serif;
+  text-decoration:underline;
+}
+
+/* Flashcard */
+.flashcard-container{
+  display:flex;flex-direction:column;align-items:center;gap:2rem;
+  padding:1rem 0;
+}
+.flashcard{
+  width:100%;max-width:560px;
+  height:320px;
+  perspective:1200px;
+  cursor:pointer;
+}
+.card-inner{
+  width:100%;height:100%;
+  position:relative;
+  transform-style:preserve-3d;
+  transition:transform 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.card-inner.flipped{transform:rotateY(180deg)}
+.card-front,.card-back{
+  position:absolute;width:100%;height:100%;
+  backface-visibility:hidden;
+  border-radius:12px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:2rem;text-align:center;
+  border:1px solid var(--border);
+  box-shadow:0 4px 20px var(--shadow);
+}
+.card-front{
+  background:white;
+  background-image:
+    linear-gradient(135deg, rgba(139,69,19,0.03) 0%, transparent 60%),
+    radial-gradient(ellipse at 90% 10%, rgba(184,134,11,0.05) 0%, transparent 50%);
+}
+.card-back{
+  background:var(--ink);
+  transform:rotateY(180deg);
+  background-image:radial-gradient(ellipse at 50% 0%, rgba(139,69,19,0.2) 0%, transparent 60%);
+}
+.card-label{
+  font-size:11px;letter-spacing:0.15em;
+  color:var(--ink3);margin-bottom:1rem;
+  font-weight:500;
+}
+.card-back .card-label{color:rgba(250,248,243,0.4)}
+.card-word{
+  font-family:'Noto Serif JP',serif;
+  font-size:52px;font-weight:500;
+  color:var(--ink);line-height:1.1;
+}
+.card-reading{
+  font-size:18px;color:var(--accent);
+  margin-top:8px;letter-spacing:0.1em;
+}
+.card-back .card-reading{color:rgba(192,57,43,0.9)}
+.card-meaning{
+  font-size:20px;color:var(--washi);
+  font-family:'Noto Sans JP',sans-serif;
+  font-weight:300;line-height:1.6;
+}
+.card-ex{
+  font-size:13px;color:rgba(250,248,243,0.6);
+  margin-top:12px;font-style:italic;
+  line-height:1.6;max-width:400px;
+}
+.card-hint{
+  font-size:11px;color:var(--ink3);
+  margin-top:1rem;letter-spacing:0.05em;
+}
+.fc-controls{
+  display:flex;gap:12px;align-items:center;
+}
+.fc-btn{
+  padding:10px 24px;border-radius:6px;
+  border:1px solid var(--border);
+  background:white;cursor:pointer;
+  font-family:'Noto Sans JP',sans-serif;
+  font-size:13px;color:var(--ink);
+  transition:all 0.15s;display:flex;align-items:center;gap:6px;
+}
+.fc-btn:hover{background:var(--washi2)}
+.fc-btn.know{border-color:var(--green);color:var(--green)}
+.fc-btn.know:hover{background:rgba(45,106,79,0.1)}
+.fc-btn.unknown{border-color:var(--accent2);color:var(--accent2)}
+.fc-btn.unknown:hover{background:rgba(192,57,43,0.08)}
+.progress-bar{
+  width:100%;max-width:560px;
+  height:4px;background:var(--border);border-radius:2px;
+}
+.progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s}
+.fc-counter{font-size:13px;color:var(--ink3)}
+
+/* Quiz */
+.quiz-card{
+  max-width:680px;margin:0 auto;
+}
+.quiz-q-type{
+  font-size:11px;letter-spacing:0.12em;color:var(--ink3);
+  margin-bottom:0.5rem;font-weight:500;
+}
+.quiz-question{
+  font-family:'Noto Serif JP',serif;
+  font-size:28px;font-weight:500;color:var(--ink);
+  margin-bottom:0.5rem;line-height:1.4;
+}
+.quiz-sub{
+  font-size:14px;color:var(--ink3);margin-bottom:1.5rem;
+}
+.options-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:10px;margin-bottom:1.5rem;
+}
+.option-btn{
+  padding:14px 16px;
+  border:1.5px solid var(--border);
+  border-radius:8px;background:white;
+  cursor:pointer;font-family:'Noto Sans JP',sans-serif;
+  font-size:14px;color:var(--ink);text-align:left;
+  transition:all 0.15s;
+  display:flex;align-items:center;gap:10px;
+  line-height:1.4;
+}
+.option-btn:hover:not(:disabled){
+  border-color:var(--accent);
+  background:rgba(139,69,19,0.04);
+}
+.option-btn.correct{
+  border-color:var(--green)!important;
+  background:rgba(45,106,79,0.08)!important;
+  color:var(--green)!important;
+}
+.option-btn.wrong{
+  border-color:var(--accent2)!important;
+  background:rgba(192,57,43,0.08)!important;
+  color:var(--accent2)!important;
+}
+.option-btn.disabled{cursor:default}
+.option-letter{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--washi2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:500;flex-shrink:0;
+}
+.quiz-explanation{
+  background:var(--washi2);border-radius:6px;
+  padding:12px 16px;margin-bottom:1rem;
+  font-size:13px;color:var(--ink2);line-height:1.6;
+}
+.quiz-result{
+  text-align:center;padding:3rem 2rem;
+}
+.score-ring{
+  width:120px;height:120px;border-radius:50%;
+  border:6px solid var(--border);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  margin:0 auto 1.5rem;
+  position:relative;
+}
+.score-num{font-size:32px;font-weight:500;color:var(--accent)}
+.score-total{font-size:13px;color:var(--ink3)}
+.result-title{
+  font-family:'Noto Serif JP',serif;
+  font-size:22px;font-weight:500;margin-bottom:0.5rem;
+}
+.result-sub{font-size:14px;color:var(--ink3);margin-bottom:2rem}
+
+/* Import */
+.import-area{
+  border:2px dashed var(--border);
+  border-radius:8px;padding:3rem 2rem;
+  text-align:center;cursor:pointer;
+  transition:all 0.2s;background:var(--washi2);
+  margin-bottom:1.5rem;
+}
+.import-area:hover{border-color:var(--accent);background:rgba(139,69,19,0.04)}
+.import-area.drag-over{border-color:var(--accent);background:rgba(139,69,19,0.08)}
+.import-icon{font-size:48px;color:var(--ink3);margin-bottom:1rem}
+.import-title{font-size:16px;font-weight:500;margin-bottom:0.5rem}
+.import-sub{font-size:13px;color:var(--ink3);line-height:1.6}
+.format-guide{
+  background:var(--washi2);border-radius:6px;padding:1rem 1.25rem;
+  font-size:13px;line-height:1.8;margin-bottom:1rem;
+}
+.format-guide code{
+  background:rgba(139,69,19,0.1);padding:2px 6px;border-radius:3px;
+  font-family:monospace;font-size:12px;color:var(--accent);
+}
+textarea.import-text{
+  width:100%;height:200px;
+  border:1px solid var(--border);border-radius:6px;
+  padding:12px;font-family:monospace;font-size:12px;
+  color:var(--ink);background:white;resize:vertical;outline:none;
+  margin-bottom:1rem;
+}
+textarea.import-text:focus{border-color:var(--accent)}
+
+/* Pagination */
+.pagination{
+  display:flex;align-items:center;justify-content:between;
+  gap:8px;margin-top:1rem;
+  flex-wrap:wrap;
+}
+.page-info{font-size:13px;color:var(--ink3);margin-right:auto}
+.page-btn{
+  width:32px;height:32px;border-radius:4px;
+  border:1px solid var(--border);background:white;
+  cursor:pointer;font-size:13px;color:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.15s;
+}
+.page-btn:hover{background:var(--washi2)}
+.page-btn.active{background:var(--accent);color:white;border-color:var(--accent)}
+
+/* Decorative */
+.section-title{
+  font-family:'Noto Serif JP',serif;
+  font-size:20px;font-weight:500;
+  margin-bottom:1.5rem;color:var(--ink);
+  display:flex;align-items:center;gap:10px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--border);
+}
+.divider{color:var(--border)}
+.empty-state{
+  text-align:center;padding:3rem;
+  color:var(--ink3);font-size:14px;
+}
+
+/* Toast */
+.toast{
+  position:fixed;bottom:2rem;right:2rem;
+  background:var(--ink);color:var(--washi);
+  padding:10px 18px;border-radius:6px;
+  font-size:13px;z-index:999;
+  animation:fadeInUp 0.3s ease;
+  display:none;
+}
+.toast.show{display:block}
+@keyframes fadeInUp{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Quiz type selector */
+.type-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem}
+.type-chip{
+  padding:6px 14px;border-radius:20px;
+  border:1px solid var(--border);
+  background:white;cursor:pointer;font-size:12px;
+  font-family:'Noto Sans JP',sans-serif;
+  transition:all 0.15s;color:var(--ink2);
+}
+.type-chip.active{background:var(--accent);color:white;border-color:var(--accent)}
+
+.quiz-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:1.5rem;
+}
+.quiz-progress{font-size:13px;color:var(--ink3)}
+.quiz-score-live{
+  font-size:13px;
+  display:flex;gap:12px;
+}
+.q-correct{color:var(--green);font-weight:500}
+.q-wrong{color:var(--accent2);font-weight:500}
+
+.fill-input{
+  width:100%;padding:12px 14px;
+  border:1.5px solid var(--border);border-radius:8px;
+  font-family:'Noto Serif JP',serif;font-size:20px;
+  color:var(--ink);outline:none;margin-bottom:1rem;
+  background:white;
+}
+.fill-input:focus{border-color:var(--accent)}
+.fill-input.correct{border-color:var(--green)!important;background:rgba(45,106,79,0.06)}
+.fill-input.wrong{border-color:var(--accent2)!important;background:rgba(192,57,43,0.06)}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const SAMPLE_WORDS = [
+  {id:1,kanji:"曖昧",reading:"あいまい",meaning:"模糊不清；含混",pos:"形容動詞",example:"彼の態度は曖昧だ。",example_cn:"他的态度很暧昧。",synonyms:["不明瞭"],antonyms:["明確"],year:2014,bookmarked:false,mastered:false},
+  {id:2,kanji:"おろか",reading:"おろか",meaning:"不必说，何况",pos:"副詞",example:"日本語はおろか、英語もできない。",example_cn:"不要说日语，就连英语也不会。",synonyms:[],antonyms:[],year:2015,bookmarked:false,mastered:false},
+  {id:3,kanji:"隔たり",reading:"へだたり",meaning:"距离；差距；隔阂",pos:"名詞",example:"両者の意見には大きな隔たりがある。",example_cn:"两者之间的意见存在很大分歧。",synonyms:["差異","距離"],antonyms:[],year:2013,bookmarked:false,mastered:false},
+  {id:4,kanji:"憂鬱",reading:"ゆううつ",meaning:"忧郁；心情压抑",pos:"名詞・形容動詞",example:"梅雨の季節は憂鬱になる。",example_cn:"梅雨季节让人心情郁闷。",synonyms:["気が重い"],antonyms:["爽快"],year:2016,bookmarked:false,mastered:false},
+  {id:5,kanji:"凌ぐ",reading:"しのぐ",meaning:"克服；超过；胜过",pos:"動詞",example:"困難を凌いで成功した。",example_cn:"克服困难，获得了成功。",synonyms:["超える","乗り越える"],antonyms:[],year:2012,bookmarked:false,mastered:false},
+  {id:6,kanji:"寛大",reading:"かんだい",meaning:"宽大；宽宏大量",pos:"形容動詞",example:"先生は寛大な心で許してくれた。",example_cn:"老师宽宏大量地原谅了他。",synonyms:["寛容","大らか"],antonyms:["厳格","狭量"],year:2018,bookmarked:false,mastered:false},
+  {id:7,kanji:"把握",reading:"はあく",meaning:"掌握；理解；抓住",pos:"名詞・動詞",example:"状況をしっかり把握する。",example_cn:"牢牢掌握情况。",synonyms:["理解","掌握"],antonyms:[],year:2011,bookmarked:false,mastered:false},
+  {id:8,kanji:"皮肉",reading:"ひにく",meaning:"讽刺；挖苦",pos:"名詞・形容動詞",example:"皮肉を言うのはよくない。",example_cn:"说讽刺话是不好的。",synonyms:["嫌み","風刺"],antonyms:[],year:2017,bookmarked:false,mastered:false},
+  {id:9,kanji:"途方に暮れる",reading:"とほうにくれる",meaning:"不知所措；束手无策",pos:"慣用句",example:"突然の出来事に途方に暮れた。",example_cn:"面对突发事件，茫然无措。",synonyms:["困惑する","途方に暮れる"],antonyms:[],year:2019,bookmarked:false,mastered:false},
+  {id:10,kanji:"懐かしい",reading:"なつかしい",meaning:"怀念的；令人留恋的",pos:"形容詞",example:"故郷の風景が懐かしい。",example_cn:"对故乡的风景充满留恋。",synonyms:["思い出深い"],antonyms:[],year:2020,bookmarked:false,mastered:false},
+  {id:11,kanji:"斬新",reading:"ざんしん",meaning:"崭新；独特新颖",pos:"形容動詞",example:"斬新なデザインが注目を集めた。",example_cn:"崭新的设计吸引了众人目光。",synonyms:["独創的","新奇"],antonyms:["陳腐","ありふれた"],year:2021,bookmarked:false,mastered:false},
+  {id:12,kanji:"頑固",reading:"がんこ",meaning:"顽固；固执",pos:"形容動詞",example:"頑固な性格で人の意見を聞かない。",example_cn:"性格固执，不听别人意见。",synonyms:["意固地","強情"],antonyms:["柔軟","素直"],year:2022,bookmarked:false,mastered:false},
+  {id:13,kanji:"漠然",reading:"ばくぜん",meaning:"模糊；茫然",pos:"副詞・形容動詞",example:"漠然とした不安を感じた。",example_cn:"感到莫名的不安。",synonyms:["曖昧","ぼんやり"],antonyms:["明確","具体的"],year:2023,bookmarked:false,mastered:false},
+  {id:14,kanji:"辛抱",reading:"しんぼう",meaning:"忍耐；坚持",pos:"名詞・動詞",example:"辛抱強く待つことが大切だ。",example_cn:"耐心等待是很重要的。",synonyms:["忍耐","我慢"],antonyms:[],year:2024,bookmarked:false,mastered:false},
+  {id:15,kanji:"潔い",reading:"いさぎよい",meaning:"干脆；坦然；清廉",pos:"形容詞",example:"負けを認める彼の態度は潔かった。",example_cn:"他承认失败的态度十分干脆。",synonyms:["清廉","爽やか"],antonyms:["未練がましい"],year:2016,bookmarked:false,mastered:false},
+  {id:16,kanji:"おびただしい",reading:"おびただしい",meaning:"极多；大量",pos:"形容詞",example:"おびただしい数の書類が机に積まれていた。",example_cn:"桌子上堆着大量文件。",synonyms:["膨大","夥しい"],antonyms:[],year:2013,bookmarked:false,mastered:false},
+  {id:17,kanji:"面目",reading:"めんぼく/めんもく",meaning:"面子；体面；名誉",pos:"名詞",example:"面目を保つために努力した。",example_cn:"为了保全面子而努力。",synonyms:["体裁","名誉"],antonyms:[],year:2012,bookmarked:false,mastered:false},
+  {id:18,kanji:"喪失",reading:"そうしつ",meaning:"丧失；失去",pos:"名詞・動詞",example:"自信を喪失してしまった。",example_cn:"失去了自信。",synonyms:["失う","紛失"],antonyms:["獲得","取得"],year:2015,bookmarked:false,mastered:false},
+  {id:19,kanji:"妥協",reading:"だきょう",meaning:"妥协；让步",pos:"名詞・動詞",example:"双方が妥協して合意に達した。",example_cn:"双方妥协后达成了协议。",synonyms:["譲歩","折り合い"],antonyms:["拒否","主張"],year:2018,bookmarked:false,mastered:false},
+  {id:20,kanji:"誘惑",reading:"ゆうわく",meaning:"诱惑；引诱",pos:"名詞・動詞",example:"甘い誘惑に負けてしまった。",example_cn:"抵不住甜蜜的诱惑。",synonyms:["惑わす","そそのかす"],antonyms:[],year:2011,bookmarked:false,mastered:false},
+];
+
+let words = JSON.parse(localStorage.getItem('n1words')||'null') || SAMPLE_WORDS;
+let currentTab = 'list';
+let searchQ = '';
+let filterPos = 'all';
+let filterYear = 'all';
+let filterBookmark = false;
+let currentPage = 1;
+const PAGE_SIZE = 10;
+let expandedRows = new Set();
+
+// Flashcard state
+let fcIndex = 0;
+let fcFlipped = false;
+let fcDeck = [];
+let fcMode = 'all';
+
+// Quiz state
+let quizType = 'meaning';
+let quizQ = null;
+let quizOptions = [];
+let quizAnswered = false;
+let quizScore = {correct:0,wrong:0};
+let quizTotal = 10;
+let quizCount = 0;
+let quizResults = [];
+let quizDone = false;
+let fillAnswer = '';
+let fillChecked = false;
+
+function save(){localStorage.setItem('n1words',JSON.stringify(words))}
+
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2000);
+}
+
+function getFiltered(){
+  return words.filter(w=>{
+    const q=searchQ.toLowerCase();
+    const matchQ=!q||(w.kanji.toLowerCase().includes(q)||w.reading.includes(q)||w.meaning.includes(q));
+    const matchPos=filterPos==='all'||w.pos.includes(filterPos);
+    const matchYear=filterYear==='all'||w.year==filterYear;
+    const matchBm=!filterBookmark||w.bookmarked;
+    return matchQ&&matchPos&&matchYear&&matchBm;
+  });
+}
+
+function getPosOptions(){
+  const all=new Set();
+  words.forEach(w=>{w.pos.split('・').forEach(p=>all.add(p.trim()))});
+  return Array.from(all).sort();
+}
+
+function getYearOptions(){
+  const all=new Set(words.map(w=>w.year));
+  return Array.from(all).sort((a,b)=>b-a);
+}
+
+// ===================== RENDER =====================
+function render(){
+  const app=document.getElementById('app');
+  app.innerHTML=`
+    ${renderHeader()}
+    ${renderNav()}
+    <div class="main">
+      ${currentTab==='list'?renderList():''}
+      ${currentTab==='flash'?renderFlash():''}
+      ${currentTab==='quiz'?renderQuiz():''}
+      ${currentTab==='import'?renderImport():''}
+    </div>
+  `;
+  bindEvents();
+}
+
+function renderHeader(){
+  const mastered=words.filter(w=>w.mastered).length;
+  const bookmarks=words.filter(w=>w.bookmarked).length;
+  return `
+  <div class="header">
+    <div class="logo">
+      <span style="color:var(--gold);font-size:22px">日</span>
+      N1 真題詞彙庫
+      <span class="logo-badge">2011–2024</span>
+    </div>
+    <div class="stats-bar">
+      <div class="stat">総単語数 <strong>${words.length}</strong></div>
+      <div class="stat">習得済 <strong>${mastered}</strong></div>
+      <div class="stat">ブックマーク <strong>${bookmarks}</strong></div>
+    </div>
+  </div>`;
+}
+
+function renderNav(){
+  const tabs=[
+    {id:'list',icon:'📚',label:'词库'},
+    {id:'flash',icon:'🃏',label:'闪卡'},
+    {id:'quiz',icon:'✍️',label:'测验'},
+    {id:'import',icon:'📥',label:'导入'},
+  ];
+  return `<div class="nav">
+    ${tabs.map(t=>`<button class="nav-btn ${currentTab===t.id?'active':''}" onclick="setTab('${t.id}')">
+      <span>${t.icon}</span>${t.label}
+    </button>`).join('')}
+  </div>`;
+}
+
+// ========== LIST ==========
+function renderList(){
+  const filtered=getFiltered();
+  const total=filtered.length;
+  const pages=Math.ceil(total/PAGE_SIZE);
+  const start=(currentPage-1)*PAGE_SIZE;
+  const paged=filtered.slice(start,start+PAGE_SIZE);
+  const posOpts=getPosOptions();
+  const yearOpts=getYearOptions();
+
+  return `
+  <div class="section-title">
+    <span>📚</span> 词汇一览
+    <span style="font-size:13px;font-weight:400;color:var(--ink3);font-family:'Noto Sans JP',sans-serif;margin-left:auto">${total} 条</span>
+  </div>
+  <div class="controls">
+    <input class="search-box" id="searchInput" placeholder="搜索汉字・假名・释义…" value="${searchQ}">
+    <select class="filter-select" id="posFilter">
+      <option value="all">全部词性</option>
+      ${posOpts.map(p=>`<option value="${p}" ${filterPos===p?'selected':''}>${p}</option>`).join('')}
+    </select>
+    <select class="filter-select" id="yearFilter">
+      <option value="all">全部年份</option>
+      ${yearOpts.map(y=>`<option value="${y}" ${filterYear==y?'selected':''}>${y}年</option>`).join('')}
+    </select>
+    <button class="btn ${filterBookmark?'primary':''}" onclick="toggleBookmarkFilter()">
+      ${filterBookmark?'⭐ 收藏中':'☆ 收藏'}
+    </button>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <table class="word-table">
+      <thead>
+        <tr>
+          <th style="width:180px">単語</th>
+          <th>意味・例文</th>
+          <th style="width:120px">词性/年份</th>
+          <th style="width:80px">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${paged.length===0?`<tr><td colspan="4"><div class="empty-state">没有找到匹配的词汇</div></td></tr>`:''}
+        ${paged.map(w=>renderWordRow(w)).join('')}
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination">
+    <span class="page-info">第 ${start+1}–${Math.min(start+PAGE_SIZE,total)} 条，共 ${total} 条</span>
+    ${pages>1?`
+      <button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage<=1?'disabled':''}>‹</button>
+      ${Array.from({length:Math.min(pages,7)},(_,i)=>{
+        let p=i+1;
+        if(pages>7){
+          if(currentPage<=4) p=i+1;
+          else if(currentPage>=pages-3) p=pages-6+i;
+          else p=currentPage-3+i;
+        }
+        return `<button class="page-btn ${currentPage===p?'active':''}" onclick="goPage(${p})">${p}</button>`;
+      }).join('')}
+      <button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage>=pages?'disabled':''}>›</button>
+    `:''}
+  </div>`;
+}
+
+function renderWordRow(w){
+  const expanded=expandedRows.has(w.id);
+  return `<tr>
+    <td>
+      <div class="word-kanji">${w.kanji}</div>
+      <div class="word-reading">${w.reading}</div>
+    </td>
+    <td>
+      <div class="word-meaning">${w.meaning}</div>
+      <div class="word-example" style="${expanded?'':'display:none'}" id="ex-${w.id}">
+        ${w.example}<br><span style="color:var(--ink3)">${w.example_cn}</span>
+        ${w.synonyms&&w.synonyms.length?`<br><span class="tag tag-syn">類</span>${w.synonyms.join('・')}`:''}
+        ${w.antonyms&&w.antonyms.length?`<br><span class="tag tag-ant">対</span>${w.antonyms.join('・')}`:''}
+      </div>
+      <button class="expand-btn" onclick="toggleExpand(${w.id})">${expanded?'▲ 收起':'▼ 展开例句'}</button>
+    </td>
+    <td>
+      <span class="tag tag-pos">${w.pos}</span>
+      <br><span class="tag tag-year">${w.year}年</span>
+      ${w.mastered?`<br><span class="tag" style="background:#e8f8e8;color:#2d6a4f">✓ 已掌握</span>`:''}
+    </td>
+    <td style="text-align:center">
+      <button class="bookmark-btn ${w.bookmarked?'active':''}" onclick="toggleBookmark(${w.id})" title="${w.bookmarked?'取消收藏':'收藏'}">
+        ${w.bookmarked?'⭐':'☆'}
+      </button>
+      <button class="bookmark-btn" onclick="toggleMastered(${w.id})" title="${w.mastered?'标记未掌握':'标记已掌握'}" style="${w.mastered?'color:var(--green)':''}">
+        ${w.mastered?'✓':'○'}
+      </button>
+    </td>
+  </tr>`;
+}
+
+// ========== FLASHCARD ==========
+function renderFlash(){
+  if(fcDeck.length===0) initFC();
+  const w=fcDeck[fcIndex];
+  if(!w) return '<div class="empty-state">没有词汇</div>';
+  const pct=Math.round((fcIndex/fcDeck.length)*100);
+  const mastered=fcDeck.filter((_,i)=>i<fcIndex&&words.find(x=>x.id===_.id)?.mastered).length;
+  return `
+  <div class="section-title"><span>🃏</span> 闪卡复习
+    <div style="margin-left:auto;display:flex;gap:8px">
+      <select class="filter-select" id="fcModeSelect" style="font-size:12px;padding:5px 10px">
+        <option value="all" ${fcMode==='all'?'selected':''}>全部词汇</option>
+        <option value="bookmark" ${fcMode==='bookmark'?'selected':''}>仅收藏</option>
+        <option value="unmastered" ${fcMode==='unmastered'?'selected':''}>未掌握</option>
+      </select>
+    </div>
+  </div>
+  <div class="flashcard-container">
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div class="fc-counter">${fcIndex+1} / ${fcDeck.length}</div>
+    <div class="flashcard" onclick="flipFC()">
+      <div class="card-inner ${fcFlipped?'flipped':''}" id="fcInner">
+        <div class="card-front">
+          <div class="card-label">単語</div>
+          <div class="card-word">${w.kanji}</div>
+          <div style="height:24px"></div>
+          <div class="card-hint">点击翻转查看读音和意思</div>
+        </div>
+        <div class="card-back">
+          <div class="card-label">読み・意味</div>
+          <div class="card-reading">${w.reading}</div>
+          <div class="card-meaning">${w.meaning}</div>
+          <div class="card-ex">${w.example}<br>${w.example_cn}</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-controls">
+      <button class="fc-btn unknown" onclick="fcVote(false)">✗ 不会</button>
+      <button class="fc-btn" onclick="fcPrev()">← 上一张</button>
+      <button class="fc-btn" onclick="fcNext()">下一张 →</button>
+      <button class="fc-btn know" onclick="fcVote(true)">✓ 已掌握</button>
+    </div>
+  </div>`;
+}
+
+function initFC(){
+  let pool=words;
+  if(fcMode==='bookmark') pool=words.filter(w=>w.bookmarked);
+  if(fcMode==='unmastered') pool=words.filter(w=>!w.mastered);
+  fcDeck=[...pool].sort(()=>Math.random()-0.5);
+  fcIndex=0;fcFlipped=false;
+}
+
+function flipFC(){fcFlipped=!fcFlipped;render()}
+function fcNext(){fcFlipped=false;fcIndex=Math.min(fcIndex+1,fcDeck.length-1);render()}
+function fcPrev(){fcFlipped=false;fcIndex=Math.max(fcIndex-1,0);render()}
+function fcVote(know){
+  const w=fcDeck[fcIndex];
+  const wi=words.findIndex(x=>x.id===w.id);
+  if(wi>=0){words[wi].mastered=know;save();}
+  toast(know?'已标记为掌握':'已标记为未掌握');
+  fcNext();
+}
+
+// ========== QUIZ ==========
+function renderQuiz(){
+  if(quizDone) return renderQuizResult();
+  if(!quizQ) generateQuestion();
+  const w=quizQ;
+  if(!w) return '<div class="empty-state">词汇数量不足，无法出题</div>';
+
+  return `
+  <div class="section-title"><span>✍️</span> 测验模式
+    <span style="margin-left:auto;font-size:13px;font-weight:400;color:var(--ink3);font-family:'Noto Sans JP',sans-serif">
+      模拟 JLPT N1 题型
+    </span>
+  </div>
+  <div class="type-chips">
+    ${[
+      {id:'meaning',label:'选择意思'},
+      {id:'reading',label:'选择读音'},
+      {id:'kanji',label:'选择汉字'},
+      {id:'fill',label:'填空造句'},
+    ].map(t=>`<button class="type-chip ${quizType===t.id?'active':''}" onclick="setQuizType('${t.id}')">${t.label}</button>`).join('')}
+  </div>
+  <div class="card quiz-card">
+    <div class="quiz-header">
+      <div class="quiz-progress">第 ${quizCount+1} / ${quizTotal} 题</div>
+      <div class="quiz-score-live">
+        <span class="q-correct">✓ ${quizScore.correct}</span>
+        <span class="q-wrong">✗ ${quizScore.wrong}</span>
+      </div>
+    </div>
+    <div class="progress-bar" style="margin-bottom:1.5rem">
+      <div class="progress-fill" style="width:${(quizCount/quizTotal)*100}%"></div>
+    </div>
+    ${quizType==='fill'?renderFillQ():renderChoiceQ()}
+  </div>`;
+}
+
+function renderChoiceQ(){
+  const w=quizQ;
+  let qText='',qSub='';
+  if(quizType==='meaning'){
+    qText=w.kanji;
+    qSub=`読み：${w.reading}`;
+  } else if(quizType==='reading'){
+    qText=w.kanji;
+    qSub='次の言葉の正しい読み方を選べ';
+  } else if(quizType==='kanji'){
+    qText=w.reading;
+    qSub='次の読み方に対応する漢字を選べ';
+  }
+  const labels=['A','B','C','D'];
+  return `
+  <div class="quiz-q-type">${{meaning:'意味選択',reading:'読み選択',kanji:'漢字選択'}[quizType]}</div>
+  <div class="quiz-question">${qText}</div>
+  <div class="quiz-sub">${qSub}</div>
+  <div class="options-grid">
+    ${quizOptions.map((opt,i)=>{
+      let cls='option-btn';
+      if(quizAnswered){
+        cls+=' disabled';
+        if(opt.correct) cls+=' correct';
+        else if(opt.selected) cls+=' wrong';
+      }
+      return `<button class="${cls}" onclick="answerChoice(${i})" ${quizAnswered?'disabled':''}>
+        <span class="option-letter">${labels[i]}</span>
+        <span>${opt.text}</span>
+      </button>`;
+    }).join('')}
+  </div>
+  ${quizAnswered?`
+    <div class="quiz-explanation">
+      <strong>${quizOptions.find(o=>o.correct)?.text}</strong>
+      &nbsp;·&nbsp;${w.meaning}
+      <br><span style="color:var(--ink3);font-size:12px;margin-top:4px;display:block">${w.example} / ${w.example_cn}</span>
+    </div>
+    <button class="btn primary" onclick="nextQuiz()" style="width:100%;justify-content:center">
+      ${quizCount+1>=quizTotal?'查看结果':'下一题 →'}
+    </button>
+  `:''}`;
+}
+
+function renderFillQ(){
+  const w=quizQ;
+  const sentence=w.example.replace(w.kanji,'＿＿＿');
+  return `
+  <div class="quiz-q-type">填空・造句</div>
+  <div class="quiz-question" style="font-size:20px;line-height:1.6">${sentence}</div>
+  <div class="quiz-sub">${w.example_cn}</div>
+  <input class="fill-input ${fillChecked?(fillAnswer.trim()===w.kanji||fillAnswer.trim()===w.reading?'correct':'wrong'):''}"
+    id="fillInput" placeholder="在此输入答案…" value="${fillAnswer}"
+    onchange="setFill(this.value)" ${fillChecked?'disabled':''}
+    onkeydown="if(event.key==='Enter')checkFill()">
+  ${fillChecked?`
+    <div class="quiz-explanation">
+      正解：<strong>${w.kanji}（${w.reading}）</strong>
+      &nbsp;·&nbsp;${w.meaning}
+    </div>
+    <button class="btn primary" onclick="nextQuiz()" style="width:100%;justify-content:center">
+      ${quizCount+1>=quizTotal?'查看结果':'下一题 →'}
+    </button>
+  `:`<button class="btn primary" onclick="checkFill()" style="width:100%;justify-content:center">确认答案</button>`}`;
+}
+
+function renderQuizResult(){
+  const pct=Math.round((quizScore.correct/quizTotal)*100);
+  let grade='';
+  if(pct>=90) grade='🎌 優秀！接近满分！';
+  else if(pct>=70) grade='👍 良好，继续努力！';
+  else if(pct>=50) grade='📖 及格，需要加强复习';
+  else grade='💪 多多练习，加油！';
+  return `
+  <div class="section-title"><span>✍️</span> 测验结果</div>
+  <div class="card quiz-card">
+    <div class="quiz-result">
+      <div class="score-ring">
+        <div class="score-num">${quizScore.correct}</div>
+        <div class="score-total">/ ${quizTotal}</div>
+      </div>
+      <div class="result-title">${grade}</div>
+      <div class="result-sub">正答率 ${pct}%　正解 ${quizScore.correct} 問　不正解 ${quizScore.wrong} 問</div>
+      <button class="btn primary" onclick="restartQuiz()" style="margin:0 auto">再次挑战</button>
+    </div>
+    <div style="border-top:1px solid var(--border);padding-top:1rem;margin-top:0.5rem">
+      <div style="font-size:13px;font-weight:500;margin-bottom:1rem;color:var(--ink2)">本次错误词汇</div>
+      ${quizResults.filter(r=>!r.correct).map(r=>`
+        <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:0.5px solid var(--border)">
+          <span style="font-family:'Noto Serif JP',serif;font-size:18px">${r.word.kanji}</span>
+          <span style="font-size:12px;color:var(--accent)">${r.word.reading}</span>
+          <span style="font-size:13px;color:var(--ink2)">${r.word.meaning}</span>
+        </div>
+      `).join('')}
+      ${quizResults.filter(r=>!r.correct).length===0?'<div style="text-align:center;padding:1rem;color:var(--green)">🎊 全部答对！</div>':''}
+    </div>
+  </div>`;
+}
+
+function generateQuestion(){
+  if(words.length<4) return;
+  const pool=words.filter(w=>!w.mastered).length>=4?words.filter(w=>!w.mastered):words;
+  quizQ=pool[Math.floor(Math.random()*pool.length)];
+  const others=words.filter(w=>w.id!==quizQ.id).sort(()=>Math.random()-0.5).slice(0,3);
+  if(quizType==='meaning'){
+    quizOptions=[{text:quizQ.meaning,correct:true},...others.map(w=>({text:w.meaning,correct:false}))];
+  } else if(quizType==='reading'){
+    quizOptions=[{text:quizQ.reading,correct:true},...others.map(w=>({text:w.reading,correct:false}))];
+  } else if(quizType==='kanji'){
+    quizOptions=[{text:quizQ.kanji,correct:true},...others.map(w=>({text:w.kanji,correct:false}))];
+  }
+  if(quizType!=='fill') quizOptions=quizOptions.sort(()=>Math.random()-0.5);
+  quizAnswered=false;fillAnswer='';fillChecked=false;
+}
+
+// ========== IMPORT ==========
+function renderImport(){
+  return `
+  <div class="section-title"><span>📥</span> 导入词汇</div>
+  <div class="card" style="margin-bottom:1.5rem">
+    <div style="font-weight:500;margin-bottom:0.75rem">支持的导入格式</div>
+    <div class="format-guide">
+      每行一个单词，字段用 <code>Tab</code> 或 <code>|</code> 分隔：<br>
+      <code>汉字 | 读音 | 意思 | 词性 | 例句 | 例句中文 | 年份 | 类义词 | 对义词</code><br><br>
+      <strong>最少必填：</strong> <code>汉字 | 读音 | 意思</code>（后续字段可省略）<br>
+      <strong>示例：</strong><code>曖昧|あいまい|模糊不清|形容動詞|彼の態度は曖昧だ|他的态度暧昧|2014</code>
+    </div>
+  </div>
+
+  <div class="import-area" id="dropZone" onclick="document.getElementById('fileInput').click()">
+    <div class="import-icon">📄</div>
+    <div class="import-title">点击上传 TXT / CSV 文件</div>
+    <div class="import-sub">或将文件拖拽至此处<br>支持 .txt · .csv · .tsv 格式，UTF-8 编码</div>
+    <input type="file" id="fileInput" accept=".txt,.csv,.tsv" style="display:none" onchange="handleFileImport(this)">
+  </div>
+
+  <div style="text-align:center;color:var(--ink3);font-size:13px;margin:1rem 0">— 或直接粘贴文本 —</div>
+
+  <textarea class="import-text" id="pasteText" placeholder="直接粘贴词汇数据…"></textarea>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <button class="btn primary" onclick="importPasted()">一键导入</button>
+    <button class="btn" onclick="importPreview()">预览解析</button>
+    <button class="btn" onclick="clearImport()">清空</button>
+    <button class="btn" style="margin-left:auto;border-color:var(--accent2);color:var(--accent2)" onclick="resetWords()">恢复示例数据</button>
+  </div>
+  <div id="importMsg" style="margin-top:1rem;font-size:13px;color:var(--green)"></div>
+  `;
+}
+
+function parseLine(line){
+  const sep=line.includes('|')?'|':'\t';
+  const parts=line.split(sep).map(s=>s.trim());
+  if(parts.length<3||!parts[0]) return null;
+  return {
+    id:Date.now()+Math.random(),
+    kanji:parts[0],reading:parts[1],meaning:parts[2],
+    pos:parts[3]||'名詞',
+    example:parts[4]||`${parts[0]}を使う。`,
+    example_cn:parts[5]||'',
+    year:parseInt(parts[6])||2024,
+    synonyms:parts[7]?parts[7].split('・').filter(Boolean):[],
+    antonyms:parts[8]?parts[8].split('・').filter(Boolean):[],
+    bookmarked:false,mastered:false
+  };
+}
+
+// ========== EVENTS ==========
+function bindEvents(){
+  const si=document.getElementById('searchInput');
+  if(si) si.addEventListener('input',e=>{searchQ=e.target.value;currentPage=1;render()});
+  const pf=document.getElementById('posFilter');
+  if(pf) pf.addEventListener('change',e=>{filterPos=e.target.value;currentPage=1;render()});
+  const yf=document.getElementById('yearFilter');
+  if(yf) yf.addEventListener('change',e=>{filterYear=e.target.value;currentPage=1;render()});
+  const fm=document.getElementById('fcModeSelect');
+  if(fm) fm.addEventListener('change',e=>{fcMode=e.target.value;initFC();render()});
+  const fi=document.getElementById('fillInput');
+  if(fi) fi.addEventListener('input',e=>{fillAnswer=e.target.value});
+
+  // Drag-drop
+  const dz=document.getElementById('dropZone');
+  if(dz){
+    dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag-over')});
+    dz.addEventListener('dragleave',()=>dz.classList.remove('drag-over'));
+    dz.addEventListener('drop',e=>{
+      e.preventDefault();dz.classList.remove('drag-over');
+      const file=e.dataTransfer.files[0];
+      if(file) readFile(file);
+    });
+  }
+}
+
+window.setTab=t=>{currentTab=t;render()};
+window.toggleExpand=id=>{expandedRows.has(id)?expandedRows.delete(id):expandedRows.add(id);render()};
+window.toggleBookmark=id=>{const w=words.find(x=>x.id===id);if(w){w.bookmarked=!w.bookmarked;save();render();}};
+window.toggleMastered=id=>{const w=words.find(x=>x.id===id);if(w){w.mastered=!w.mastered;save();toast(w.mastered?'已标记为掌握':'已取消掌握');render();}};
+window.toggleBookmarkFilter=()=>{filterBookmark=!filterBookmark;currentPage=1;render()};
+window.goPage=p=>{const filtered=getFiltered();const pages=Math.ceil(filtered.length/PAGE_SIZE);if(p>=1&&p<=pages){currentPage=p;render();}};
+window.flipFC=flipFC;window.fcNext=fcNext;window.fcPrev=fcPrev;window.fcVote=fcVote;
+
+window.setQuizType=t=>{quizType=t;quizQ=null;quizAnswered=false;fillAnswer='';fillChecked=false;render()};
+window.answerChoice=(i)=>{
+  if(quizAnswered) return;
+  quizOptions[i].selected=true;
+  quizAnswered=true;
+  const correct=quizOptions[i].correct;
+  if(correct) quizScore.correct++; else quizScore.wrong++;
+  quizResults.push({word:quizQ,correct});
+  quizCount++;
+  if(quizCount>=quizTotal) quizDone=true;
+  render();
+};
+window.checkFill=()=>{
+  if(fillChecked) return;
+  fillChecked=true;
+  const ans=fillAnswer.trim();
+  const correct=ans===quizQ.kanji||ans===quizQ.reading;
+  if(correct) quizScore.correct++; else quizScore.wrong++;
+  quizResults.push({word:quizQ,correct});
+  quizCount++;
+  if(quizCount>=quizTotal) quizDone=true;
+  render();
+};
+window.setFill=v=>{fillAnswer=v};
+window.nextQuiz=()=>{if(quizDone){render();return;}quizQ=null;generateQuestion();render()};
+window.restartQuiz=()=>{quizScore={correct:0,wrong:0};quizCount=0;quizDone=false;quizResults=[];quizQ=null;generateQuestion();render()};
+
+window.handleFileImport=(input)=>{const file=input.files[0];if(file) readFile(file)};
+function readFile(file){
+  const r=new FileReader();
+  r.onload=e=>{document.getElementById('pasteText').value=e.target.result;};
+  r.readAsText(file,'UTF-8');
+}
+window.importPasted=()=>{
+  const text=document.getElementById('pasteText').value.trim();
+  if(!text){document.getElementById('importMsg').textContent='请输入数据';return;}
+  const lines=text.split('\n').filter(l=>l.trim());
+  const parsed=lines.map(parseLine).filter(Boolean);
+  if(parsed.length===0){document.getElementById('importMsg').textContent='未解析到有效数据，请检查格式';return;}
+  const existing=new Set(words.map(w=>w.kanji));
+  const newWords=parsed.filter(w=>!existing.has(w.kanji));
+  words=[...words,...newWords];save();
+  document.getElementById('importMsg').innerHTML=`<span style="color:var(--green)">✓ 成功导入 ${newWords.length} 个词汇（跳过重复 ${parsed.length-newWords.length} 个）</span>`;
+  toast(`导入成功！+${newWords.length} 词`);
+  setTimeout(()=>render(),1200);
+};
+window.importPreview=()=>{
+  const text=document.getElementById('pasteText').value.trim();
+  const lines=text.split('\n').filter(l=>l.trim());
+  const parsed=lines.map(parseLine).filter(Boolean);
+  document.getElementById('importMsg').textContent=`解析到 ${parsed.length} 个词汇，点击「一键导入」确认导入`;
+};
+window.clearImport=()=>{document.getElementById('pasteText').value='';document.getElementById('importMsg').textContent=''};
+window.resetWords=()=>{if(confirm('确定要恢复示例数据吗？当前词库将被清空')){words=JSON.parse(JSON.stringify(SAMPLE_WORDS));save();render();}};
+
+render();
+</script>
+</body>
+</html>
